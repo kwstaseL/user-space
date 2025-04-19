@@ -33,7 +33,7 @@ public class User {
     @Column(nullable = false)
     private String surname;
 
-    @NotNull(message = "Gender is required")
+    @NotNull(message = "Gender is required and must be either MALE or FEMALE")
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private Gender gender;
@@ -44,15 +44,6 @@ public class User {
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Address> addresses;
-
-    public void addAddress(Address address) {
-        this.addresses.add(address);
-    }
-
-    public void removeAddress(Address address) {
-        this.addresses.remove(address);
-        address.setUser(null);
-    }
 
     @Transient
     public int getAge() {

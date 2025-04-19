@@ -1,6 +1,8 @@
 package com.kelef.usermanagement.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.kelef.usermanagement.utils.enums.AddressType;
+import jakarta.validation.constraints.NotNull;
 
 import jakarta.persistence.*;
 
@@ -19,6 +21,7 @@ public class Address {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotNull(message = "Address type is required and must be either HOME or WORK")
     @Enumerated(EnumType.STRING)
     @Column(name = "address_type", nullable = false)
     private AddressType addressType;
@@ -28,5 +31,6 @@ public class Address {
 
     @ManyToOne
     @JoinColumn(name = "user_id")
+    @JsonIgnore
     private User user;
 }
