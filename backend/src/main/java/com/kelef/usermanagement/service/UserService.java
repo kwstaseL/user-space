@@ -37,11 +37,12 @@ public class UserService {
         logger.info("User created successfully with ID: {}", savedUser.getId());
         return savedUser;
     }
+
     @Transactional
     public User updateUser(User user) {
         boolean exists = userRepository.existsById(user.getId());
         if (!exists) {
-            logger.warn("Update failed - User with ID: {} not found", user.getId());
+            logger.warn("Update failed, user with ID: {} not found", user.getId());
             throw new UserNotFoundException("User not found with id: " + user.getId());
         }
         return userRepository.save(user);
@@ -51,7 +52,7 @@ public class UserService {
     public void deleteUserById(Long id) {
         boolean exists = userRepository.existsById(id);
         if (!exists) {
-            logger.warn("Delete failed - User with ID: {} not found", id);
+            logger.warn("Delete failed, user with ID: {} not found", id);
             throw new UserNotFoundException("User not found with id: " + id);
         }
         userRepository.deleteById(id);
