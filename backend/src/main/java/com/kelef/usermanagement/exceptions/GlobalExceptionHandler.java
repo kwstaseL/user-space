@@ -1,6 +1,6 @@
 package com.kelef.usermanagement.exceptions;
-
 import com.kelef.usermanagement.exceptions.response.ErrorResponse;
+
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
@@ -18,6 +18,11 @@ import java.util.Map;
 
 import java.time.LocalDateTime;
 
+/**
+ * Global exception handler that provides centralized exception handling across all
+ * @ControllerAdvice classes. Translates exceptions into appropriate HTTP responses
+ * with standardized error format and logging.
+ */
 @ControllerAdvice
 public class GlobalExceptionHandler {
 
