@@ -4,8 +4,7 @@ import { Component } from '@angular/core';
   selector: 'app-header',
   imports: [],
   templateUrl: './header.component.html',
-  styleUrl: './header.component.scss',
 })
 export class HeaderComponent {
-  protected title = 'User Management Application';
+  readonly title = 'User Management Application';
 }

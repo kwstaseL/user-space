@@ -1,5 +1,5 @@
+import { Gender } from '../utils/enums';
 import { Address } from './address';
-import { Gender } from '../utils/enums/enums';
 
 export interface User {
   id: number;

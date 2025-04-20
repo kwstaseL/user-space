@@ -2,31 +2,31 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { User } from '../entities/user';
-import { environment } from '../env/env';
+import { environment } from '../../env/env';
 
-// can be injected somewhere
 @Injectable({
-  providedIn: 'root', // be available everywhere
+  providedIn: 'root',
 })
 export class UserService {
-  private apiUrl = environment.apiUrl;
+  private baseUrl = environment.apiUrl;
+  private usersUrl = `${this.baseUrl}/users`;
 
   constructor(private httpClient: HttpClient) {}
 
   public createUser(user: User): Observable<User> {
-    return this.httpClient.post<User>(this.apiUrl, user);
+    return this.httpClient.post<User>(this.usersUrl, user);
   }
 
   // TODO: Add pagination?
   public getAllUsers(): Observable<User[]> {
-    return this.httpClient.get<User[]>(this.apiUrl);
+    return this.httpClient.get<User[]>(this.usersUrl);
   }
 
   public getUserById(id: number): Observable<User> {
-    return this.httpClient.get<User>(`${this.apiUrl}/${id}`);
+    return this.httpClient.get<User>(`${this.usersUrl}/${id}`);
   }
 
   public deleteUser(id: number): Observable<void> {
-    return this.httpClient.delete<void>(`${this.apiUrl}/${id}`);
+    return this.httpClient.delete<void>(`${this.usersUrl}/${id}`);
   }
 }
