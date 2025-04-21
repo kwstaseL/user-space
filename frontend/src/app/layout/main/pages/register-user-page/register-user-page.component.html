@@ -1,8 +1,8 @@
-<div class="max-w-md m-auto">
-  <h2 class="page--header">Register New User</h2>
+<div class="reister--container">
+  <header class="page--header">Register New User</header>
 
   <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
-    <div class="form--group">
+    <section class="form--group">
       <label for="name" class="form--label">Name*</label>
       <input id="name" type="text" formControlName="name" class="form--input" />
       <div
@@ -11,9 +11,9 @@
       >
         Name is required
       </div>
-    </div>
+    </section>
 
-    <div class="form--group">
+    <section class="form--group">
       <label for="surname" class="form--label">Surname*</label>
       <input
         id="surname"
@@ -29,9 +29,9 @@
       >
         Surname is required
       </div>
-    </div>
+    </section>
 
-    <div class="form--group">
+    <section class="form--group">
       <label for="gender" class="form--label">Gender*</label>
       <select id="gender" formControlName="gender" class="form--input">
         <option value="MALE">Male</option>
@@ -45,9 +45,9 @@
       >
         Gender is required
       </div>
-    </div>
+    </section>
 
-    <div class="form--group">
+    <section class="form--group">
       <label for="birthdate" class="form--label">Birthdate*</label>
       <input
         id="birthdate"
@@ -64,9 +64,9 @@
       >
         Birthdate is required
       </div>
-    </div>
+    </section>
 
-    <div class="form--group">
+    <section class="form--group">
       <label for="workAddress" class="form--label">Work Address</label>
       <textarea
         id="workAddress"
@@ -74,9 +74,9 @@
         rows="2"
         class="form--input"
       ></textarea>
-    </div>
+    </section>
 
-    <div class="form--group">
+    <section class="form--group">
       <label for="homeAddress" class="form--label">Home Address</label>
       <textarea
         id="homeAddress"
@@ -84,9 +84,9 @@
         rows="2"
         class="form--input"
       ></textarea>
-    </div>
+    </section>
 
-    <div class="pt-3">
+    <section class="pt-3">
       <button
         type="submit"
         [disabled]="userForm.invalid || isSubmitting"
@@ -95,10 +95,10 @@
         <span *ngIf="!isSubmitting">Register</span>
         <span *ngIf="isSubmitting">Registering...</span>
       </button>
-    </div>
+    </section>
 
-    <div class="mt-2" *ngIf="errorMessage">
-      <p class="form--error-message">{{ errorMessage }}</p>
-    </div>
+    <section class="mt-2" *ngIf="errorMessage">
+      <p class="form--error">{{ errorMessage }}</p>
+    </section>
   </form>
 </div>

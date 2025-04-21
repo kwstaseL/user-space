@@ -1,6 +1,11 @@
 @import "tailwindcss";
 
-/* Form elements */
+/* Container styles */
+.reister--container {
+  @apply max-w-md m-auto;
+}
+
+/* Form styles  */
 .form--group {
   @apply mb-3;
 }
@@ -13,14 +18,11 @@
   @apply w-full p-2 border border-gray-200 rounded text-sm;
 }
 
+.form--submit-button {
+  @apply w-full p-2 rounded bg-blue-500 text-white disabled:bg-gray-300;
+}
+
+/* Misc Styles */
 .form--error {
   @apply text-red-500 text-sm;
-}
-
-.form--submit-button {
-  @apply w-full p-2 border border-gray-200 rounded bg-indigo-600 text-white hover:bg-indigo-700 disabled:bg-gray-300;
-}
-
-.form--error-message {
-  @apply text-red-600 mt-2;
 }

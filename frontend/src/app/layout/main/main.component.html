@@ -1,18 +1,18 @@
-<main class="flex flex-col gap-3 mt-3">
-  <section class="flex justify-center gap-3">
+<main class="main--container">
+  <section class="main--buttons">
     <app-button
       label="Display Users"
-      (onClick)="navigateTo('/users')"
-      [active]="isActive('/users')"
+      (onClick)="navigateTo(ROUTES.USERS)"
+      [active]="isActive(ROUTES.USERS)"
     />
     <app-button
       label="Register New User"
-      (onClick)="navigateTo('/register')"
-      [active]="isActive('/register')"
+      (onClick)="navigateTo(ROUTES.REGISTER)"
+      [active]="isActive(ROUTES.REGISTER)"
     />
   </section>
 
-  <section class="mt-5">
+  <section>
     <router-outlet />
   </section>
 </main>

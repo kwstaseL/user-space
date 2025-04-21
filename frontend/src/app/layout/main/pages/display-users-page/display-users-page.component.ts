@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
+
 import { User } from '../../../../entities/user';
 import { UserService } from '../../../../services/user.service';
 
@@ -13,6 +14,7 @@ import { UserService } from '../../../../services/user.service';
 })
 export class DisplayUsersPage implements OnInit {
   users: User[] = [];
+  errorMessage: string | null = null;
   isLoading = true;
 
   constructor(private userService: UserService, public router: Router) {}
@@ -30,6 +32,7 @@ export class DisplayUsersPage implements OnInit {
       },
       error: (err) => {
         console.error('Error fetching users:', err);
+        this.errorMessage = 'Could not load users.';
         this.isLoading = false;
       },
     });

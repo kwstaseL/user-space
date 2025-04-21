@@ -1,7 +1,11 @@
 import { Component } from '@angular/core';
-import { RouterOutlet, Router, NavigationEnd } from '@angular/router';
-import { ButtonComponent } from '../../components/button.component';
 import { CommonModule } from '@angular/common';
+
+import { RouterOutlet, Router, NavigationEnd } from '@angular/router';
+
+import { ButtonComponent } from '../../components/button.component';
+import { ROUTES } from '../../utils/constants';
+
 import { filter } from 'rxjs/operators';
 
 @Component({
@@ -12,6 +16,7 @@ import { filter } from 'rxjs/operators';
   styleUrl: './main.component.css',
 })
 export class MainComponent {
+  readonly ROUTES = ROUTES;
   currentRoute = '';
 
   constructor(private router: Router) {

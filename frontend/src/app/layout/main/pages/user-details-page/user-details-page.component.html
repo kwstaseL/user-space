@@ -1,6 +1,6 @@
-<div *ngIf="user && !isLoading" class="user-details--card">
+<div *ngIf="user && !isLoading" class="user-details--container">
   <header class="page--header">
-    <h2>User Details</h2>
+    <span>User Details</span>
   </header>
 
   <main class="user-details--content">
@@ -48,7 +48,9 @@
       *ngIf="!user.addresses || user.addresses.length === 0"
     >
       <h3 class="user-details--label">Addresses</h3>
-      <p class="user-details--value text-gray-500">No addresses provided</p>
+      <span class="user-details--value text-gray-500"
+        >No addresses provided</span
+      >
     </section>
   </main>
 
@@ -60,5 +62,9 @@
 </div>
 
 <div *ngIf="isLoading" class="user-details--loading">
-  <p>Loading user information...</p>
+  <span>Loading user information...</span>
+</div>
+
+<div *ngIf="error" class="user-details--loading">
+  <span>{{ error }}</span>
 </div>

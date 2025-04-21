@@ -1,5 +1,10 @@
 @import "tailwindcss";
 
+/* Container styles */
+.display--container {
+  @apply max-w-4xl m-auto;
+}
+
 /* Table styles */
 .table--container {
   @apply min-w-full p-5;
@@ -28,4 +33,10 @@
 
 .button--delete {
   @apply text-red-600 cursor-pointer;
+}
+
+/* Misc */
+
+.error-message {
+  @apply text-center text-lg mt-4;
 }

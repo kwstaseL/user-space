@@ -1,11 +1,7 @@
 @import "tailwindcss";
 
-.header {
-  @apply bg-blue-700 text-white px-6 py-4 shadow-lg flex justify-between items-center;
-}
-
-.header--title-container {
-  @apply flex items-center gap-2;
+.header--container {
+  @apply flex justify-between items-center px-6 py-4 bg-blue-700 text-white;
 }
 
 .header--title {

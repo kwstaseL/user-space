@@ -1,5 +1,15 @@
 @import "tailwindcss";
 
+/* Main styles */
+.main--container {
+  @apply flex flex-col gap-5 mt-3;
+}
+
+.main--buttons {
+  @apply flex gap-3 ml-5;
+}
+
+/* Reusable styles for pages */
 .page--header {
   @apply text-xl font-bold mb-4;
 }

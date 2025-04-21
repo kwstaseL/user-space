@@ -1,8 +1,11 @@
-import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
+
 import { UserService } from '../../../../services/user.service';
 import { User } from '../../../../entities/user';
+import { ROUTES } from '../../../../utils/constants';
 
 @Component({
   selector: 'app-user-details-page',
@@ -14,8 +17,8 @@ import { User } from '../../../../entities/user';
 export class UserDetailsPage implements OnInit {
   userId: number | null = null;
   user: User | null = null;
-  isLoading = true;
   error: string | null = null;
+  isLoading = true;
 
   constructor(
     private route: ActivatedRoute,
@@ -44,13 +47,13 @@ export class UserDetailsPage implements OnInit {
       },
       error: (err) => {
         console.error('Error fetching user details:', err);
-        this.error = 'Failed to load user details. Please try again.';
+        this.error = 'Could not find user with the given id.';
         this.isLoading = false;
       },
     });
   }
 
   goBack(): void {
-    this.router.navigate(['/users']);
+    this.router.navigate([ROUTES.USERS]);
   }
 }
