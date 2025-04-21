@@ -1,1 +1,18 @@
-<p>main works!</p>
+<div class="flex flex-col gap-3 mt-3">
+  <div class="flex m-auto gap-3">
+    <app-button
+      label="Display Users"
+      (onClick)="navigateTo('/users')"
+      [active]="isActive('/users')"
+    />
+    <app-button
+      label="Register New User"
+      (onClick)="navigateTo('/register')"
+      [active]="isActive('/register')"
+    />
+  </div>
+
+  <div class="mt-5">
+    <router-outlet />
+  </div>
+</div>

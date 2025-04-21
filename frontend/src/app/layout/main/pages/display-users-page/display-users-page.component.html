@@ -1,0 +1,40 @@
+<div class="max-w-5xl m-auto">
+  <h2 class="page--header">Registered Users</h2>
+
+  <div *ngIf="isLoading" class="page--label-offset">
+    <p>Loading users...</p>
+  </div>
+
+  <div *ngIf="!isLoading" class="overflow-x-auto">
+    <table *ngIf="users && users.length > 0" class="table--container">
+      <thead>
+        <tr>
+          <th class="table--header-cell">Name</th>
+          <th class="table--header-cell">Surname</th>
+          <th class="table--header-cell">Actions</th>
+        </tr>
+      </thead>
+      <tbody class="divide-y divide-gray-200">
+        <tr *ngFor="let user of users" class="table--row">
+          <td class="table--cell">{{ user.name }}</td>
+          <td class="table--cell">{{ user.surname }}</td>
+          <td class="table--action-cell">
+            <button
+              class="button--view"
+              (click)="router.navigate(['/users', user.id])"
+            >
+              View
+            </button>
+            <button class="button--delete" (click)="deleteUser(user.id)">
+              Delete
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div *ngIf="!users || users.length === 0" class="page--label-offset">
+      <p class="state--empty">No users found.</p>
+    </div>
+  </div>
+</div>
