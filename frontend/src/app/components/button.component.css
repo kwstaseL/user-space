@@ -1,0 +1,25 @@
+@import "tailwindcss";
+
+.button {
+  @apply rounded font-medium;
+}
+
+.button--small {
+  @apply px-2 py-2 text-sm;
+}
+
+.button--medium {
+  @apply px-4 py-2 text-base;
+}
+
+.button--large {
+  @apply px-6 py-3 text-lg;
+}
+
+.button--primary {
+  @apply bg-blue-500 hover:bg-blue-600 text-white;
+}
+
+.button--active {
+  @apply ring-2 ring-blue-300;
+}
