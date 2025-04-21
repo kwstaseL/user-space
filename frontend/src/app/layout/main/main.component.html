@@ -1,5 +1,5 @@
-<div class="flex flex-col gap-3 mt-3">
-  <div class="flex m-auto gap-3">
+<main class="flex flex-col gap-3 mt-3">
+  <section class="flex justify-center gap-3">
     <app-button
       label="Display Users"
       (onClick)="navigateTo('/users')"
@@ -10,9 +10,9 @@
       (onClick)="navigateTo('/register')"
       [active]="isActive('/register')"
     />
-  </div>
+  </section>
 
-  <div class="mt-5">
+  <section class="mt-5">
     <router-outlet />
-  </div>
-</div>
+  </section>
+</main>
