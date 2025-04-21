@@ -6,15 +6,15 @@
 }
 
 .form--label {
-  @apply font-medium;
+  @apply text-sm;
 }
 
 .form--input {
-  @apply w-full p-2 border border-gray-200 rounded;
+  @apply w-full p-2 border border-gray-200 rounded text-sm;
 }
 
 .form--error {
-  @apply text-red-500;
+  @apply text-red-500 text-sm;
 }
 
 .form--submit-button {
