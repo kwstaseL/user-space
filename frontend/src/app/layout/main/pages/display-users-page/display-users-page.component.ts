@@ -17,6 +17,13 @@ export class DisplayUsersPage implements OnInit {
   errorMessage: string | null = null;
   isLoading = true;
 
+  readonly config = {
+    page: 0,
+    pageSize: 20,
+    sortField: 'name',
+    sortDirection: 'asc',
+  };
+
   constructor(private userService: UserService, public router: Router) {}
 
   ngOnInit(): void {
@@ -24,18 +31,24 @@ export class DisplayUsersPage implements OnInit {
   }
 
   loadUsers(): void {
-    this.isLoading = true;
-    this.userService.getAllUsers().subscribe({
-      next: (data) => {
-        this.users = data;
-        this.isLoading = false;
-      },
-      error: (err) => {
-        console.error('Error fetching users:', err);
-        this.errorMessage = 'Could not load users.';
-        this.isLoading = false;
-      },
-    });
+    // this.isLoading = true;
+    this.userService
+      .getAllUsers(
+        this.config.page,
+        this.config.pageSize,
+        `${this.config.sortField},${this.config.sortDirection}`
+      )
+      .subscribe({
+        next: (data) => {
+          this.users = data.content;
+          this.isLoading = false;
+        },
+        error: (err) => {
+          console.error('Error fetching users:', err);
+          this.errorMessage = 'Could not load users.';
+          this.isLoading = false;
+        },
+      });
   }
 
   deleteUser(id: number): void {
@@ -49,5 +62,17 @@ export class DisplayUsersPage implements OnInit {
         },
       });
     }
+  }
+
+  toggleSort(field: string): void {
+    if (this.config.sortField === field) {
+      this.config.sortDirection =
+        this.config.sortDirection === 'asc' ? 'desc' : 'asc';
+    } else {
+      this.config.sortField = field;
+      this.config.sortDirection = 'asc';
+    }
+
+    this.loadUsers();
   }
 }

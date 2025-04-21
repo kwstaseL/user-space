@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 .button {
-  @apply rounded font-medium;
+  @apply cursor-pointer rounded font-medium;
 }
 
 .button--small {

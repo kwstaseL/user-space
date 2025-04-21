@@ -21,7 +21,7 @@
     <section class="user-details--section">
       <h3 class="user-details--label">Age & Birth Date</h3>
       <span class="user-details--value">
-        {{ user.age }} years old (Born: {{ user.birthDate }})
+        {{ user.age }} years old, {{ user.birthDate }}
       </span>
     </section>
 
@@ -55,9 +55,12 @@
   </main>
 
   <footer class="mt-6 flex justify-end">
-    <button class="button button--small button--primary" (click)="goBack()">
-      Back to Users
-    </button>
+    <app-button
+      label="Back to Users"
+      size="small"
+      variant="primary"
+      (onClick)="goBack()"
+    />
   </footer>
 </div>
 

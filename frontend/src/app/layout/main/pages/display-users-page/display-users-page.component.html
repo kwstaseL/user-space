@@ -17,8 +17,26 @@
       <table *ngIf="users && users.length > 0" class="table--container">
         <thead>
           <tr>
-            <th class="table--header-cell">Name</th>
-            <th class="table--header-cell">Surname</th>
+            <th
+              class="table--header-cell"
+              (click)="toggleSort('name')"
+              style="cursor: pointer"
+            >
+              Name
+              <span *ngIf="this.config.sortField === 'name'">
+                {{ this.config.sortDirection === "asc" ? "^" : "v" }}
+              </span>
+            </th>
+            <th
+              class="table--header-cell"
+              (click)="toggleSort('surname')"
+              style="cursor: pointer"
+            >
+              Surname
+              <span *ngIf="this.config.sortField === 'surname'">
+                {{ this.config.sortDirection === "asc" ? "^" : "v" }}
+              </span>
+            </th>
             <th class="table--header-cell">Actions</th>
           </tr>
         </thead>

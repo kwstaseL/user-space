@@ -19,9 +19,14 @@ export class UserService {
     return this.httpClient.post<User>(this.usersUrl, user);
   }
 
-  // TODO: Add pagination?
-  public getAllUsers(): Observable<User[]> {
-    return this.httpClient.get<User[]>(this.usersUrl);
+  // TODO: Fix this any to match Pageable return
+  public getAllUsers(
+    page: number = 0,
+    pageSize: number = 20,
+    sort: string = 'id,asc'
+  ): Observable<any> {
+    const params = `?page=${page}&size=${pageSize}&sort=${sort}`;
+    return this.httpClient.get<any>(`${this.usersUrl}${params}`);
   }
 
   public getUserById(id: number): Observable<User> {

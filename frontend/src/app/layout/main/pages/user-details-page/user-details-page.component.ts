@@ -6,11 +6,12 @@ import { CommonModule } from '@angular/common';
 import { UserService } from '../../../../services/user.service';
 import { User } from '../../../../entities/user';
 import { ROUTES } from '../../../../utils/constants';
+import { ButtonComponent } from '../../../../components/button.component';
 
 @Component({
   selector: 'app-user-details-page',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, ButtonComponent],
   templateUrl: './user-details-page.component.html',
   styleUrls: ['../../main.component.css', './user-details-page.css'],
 })
