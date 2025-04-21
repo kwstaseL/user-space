@@ -1,0 +1,25 @@
+@import "tailwindcss";
+
+.user-details--card {
+  @apply max-w-md m-auto;
+}
+
+.user-details--section {
+  @apply border-b border-gray-200 py-3;
+}
+
+.user-details--label {
+  @apply text-sm text-gray-600 font-medium;
+}
+
+.user-details--value {
+  @apply text-gray-900 mt-1;
+}
+
+.user-details--address-section {
+  @apply mt-2;
+}
+
+.user-details--loading {
+  @apply text-center py-8 text-gray-600;
+}

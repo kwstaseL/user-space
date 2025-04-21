@@ -1,1 +1,64 @@
-<p>user-details-page works!</p>
+<div *ngIf="user && !isLoading" class="user-details--card">
+  <header class="page--header">
+    <h2>User Details</h2>
+  </header>
+
+  <main class="user-details--content">
+    <section class="user-details--section">
+      <h3 class="user-details--label">Full Name</h3>
+      <span class="user-details--value"
+        >{{ user.name }} {{ user.surname }}</span
+      >
+    </section>
+
+    <section class="user-details--section">
+      <h3 class="user-details--label">Gender</h3>
+      <span class="user-details--value">
+        {{ user.gender === "MALE" ? "Male" : "Female" }}
+      </span>
+    </section>
+
+    <section class="user-details--section">
+      <h3 class="user-details--label">Age & Birth Date</h3>
+      <span class="user-details--value">
+        {{ user.age }} years old (Born: {{ user.birthDate }})
+      </span>
+    </section>
+
+    <section
+      class="user-details--section"
+      *ngIf="user.addresses && user.addresses.length > 0"
+    >
+      <h3 class="user-details--label">Addresses</h3>
+      <div
+        *ngFor="let address of user.addresses"
+        class="user-details--address-section"
+      >
+        <span class="text-sm font-medium">
+          {{
+            address.addressType === "HOME" ? "Home Address" : "Work Address"
+          }}:
+        </span>
+        <span class="user-details--value">{{ address.addressText }}</span>
+      </div>
+    </section>
+
+    <section
+      class="user-details--section"
+      *ngIf="!user.addresses || user.addresses.length === 0"
+    >
+      <h3 class="user-details--label">Addresses</h3>
+      <p class="user-details--value text-gray-500">No addresses provided</p>
+    </section>
+  </main>
+
+  <footer class="mt-6 flex justify-end">
+    <button class="button button--small button--primary" (click)="goBack()">
+      Back to Users
+    </button>
+  </footer>
+</div>
+
+<div *ngIf="isLoading" class="user-details--loading">
+  <p>Loading user information...</p>
+</div>
