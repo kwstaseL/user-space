@@ -7,6 +7,8 @@ import com.kelef.usermanagement.repository.UserRepository;
 
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import org.slf4j.Logger;
@@ -59,11 +61,8 @@ public class UserService {
         logger.info("User with ID: {} deleted successfully", id);
     }
 
-    public List<User> findAllUsers() {
-        logger.info("Fetching all users");
-        List<User> users = userRepository.findAll();
-        logger.debug("Found {} users", users.size());
-        return users;
+    public Page<User> findAllUsers(Pageable pageable) {
+        return userRepository.findAll(pageable);
     }
 
     public User findUserById(Long id) {

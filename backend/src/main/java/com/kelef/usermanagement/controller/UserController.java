@@ -6,6 +6,8 @@ import com.kelef.usermanagement.service.UserService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -60,14 +62,17 @@ public class UserController {
     }
 
     /**
-     * Retrieves all users
-     * @return List of users with 200 status
+     * Retrieves a paginated list of users
+     * Supports pagination and sorting through query parameters.
+     *
+     * @param pageable pagination and sorting information
+     * @return Page of users with HTTP 200 status
      */
     @GetMapping()
-    public ResponseEntity<List<User>> getAllUsers() {
-        List<User> users = userService.findAllUsers();
-        return new ResponseEntity<>(users, HttpStatus.OK);
+    public ResponseEntity<Page<User>> getAllUsers(Pageable pageable) {
+        return new ResponseEntity<>(userService.findAllUsers(pageable), HttpStatus.OK);
     }
+
 
     /**
      * Retrieves a specific user by ID
