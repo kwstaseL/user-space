@@ -1,39 +1,65 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
 import { Observable } from 'rxjs';
 
 import { User } from '../entities/user';
 import { environment } from '../../env/env';
+import { PageResponse } from '../types/PageResponse';
+import { AuthService } from './auth.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class UserService {
   private baseUrl = environment.apiUrl;
-  private usersUrl = `${this.baseUrl}/users`;
+  private usersUrl = `${this.baseUrl}/api/users`;
 
-  constructor(private httpClient: HttpClient) {}
+  constructor(
+    private httpClient: HttpClient,
+    private authService: AuthService
+  ) {}
 
-  public createUser(user: User): Observable<User> {
-    return this.httpClient.post<User>(this.usersUrl, user);
+  private getAuthHeaders(): HttpHeaders {
+    const token = this.authService.getCurrentToken();
+    if (!token) {
+      throw new Error('No token found');
+    }
+    return new HttpHeaders({
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
+    });
   }
 
-  // TODO: Fix this any to match Pageable return
+  public createUser(user: User): Observable<User> {
+    return this.httpClient.post<User>(this.usersUrl, user, {
+      headers: this.getAuthHeaders(),
+    });
+  }
+
   public getAllUsers(
     page: number = 0,
     pageSize: number = 20,
     sort: string = 'id,asc'
-  ): Observable<any> {
+  ): Observable<PageResponse<User>> {
     const params = `?page=${page}&size=${pageSize}&sort=${sort}`;
-    return this.httpClient.get<any>(`${this.usersUrl}${params}`);
+    return this.httpClient.get<PageResponse<User>>(
+      `${this.usersUrl}${params}`,
+      {
+        headers: this.getAuthHeaders(),
+      }
+    );
   }
 
   public getUserById(id: number): Observable<User> {
-    return this.httpClient.get<User>(`${this.usersUrl}/${id}`);
+    return this.httpClient.get<User>(`${this.usersUrl}/${id}`, {
+      headers: this.getAuthHeaders(),
+    });
   }
 
   public deleteUser(id: number): Observable<void> {
-    return this.httpClient.delete<void>(`${this.usersUrl}/${id}`);
+    return this.httpClient.delete<void>(`${this.usersUrl}/${id}`, {
+      headers: this.getAuthHeaders(),
+    });
   }
 }
