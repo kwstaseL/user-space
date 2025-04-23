@@ -4,13 +4,14 @@ import { Router } from '@angular/router';
 
 import { User } from '../../../../entities/user';
 import { UserService } from '../../../../services/user.service';
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'app-display-users-page',
   standalone: true,
   imports: [CommonModule],
   templateUrl: './display-users-page.component.html',
-  styleUrls: ['../../main.component.css', './display-users-page.component.css'],
+  styleUrls: ['../../main.component.css'],
 })
 export class DisplayUsersPage implements OnInit {
   users: User[] = [];

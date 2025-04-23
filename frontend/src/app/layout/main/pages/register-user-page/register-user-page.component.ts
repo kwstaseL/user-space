@@ -20,10 +20,7 @@ import { ROUTES } from '../../../../utils/constants';
   imports: [ReactiveFormsModule, CommonModule],
   standalone: true,
   templateUrl: './register-user-page.component.html',
-  styleUrls: [
-    '../../main.component.css',
-    './register-users-page.component.css',
-  ],
+  styleUrls: ['../../main.component.css'],
 })
 export class RegisterUserPage {
   userForm: FormGroup = new FormGroup({

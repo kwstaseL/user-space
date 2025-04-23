@@ -1,19 +1,19 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { RouterOutlet, Router, NavigationEnd } from '@angular/router';
+import { Router, NavigationEnd, RouterOutlet } from '@angular/router';
 
-import { ButtonComponent } from '../../components/button.component';
 import { ROUTES } from '../../utils/constants';
 
 import { filter } from 'rxjs/operators';
+import { ButtonComponent } from '../../components/button.component';
 
 @Component({
   selector: 'app-main',
   standalone: true,
-  imports: [RouterOutlet, ButtonComponent, CommonModule],
+  imports: [CommonModule, RouterOutlet, ButtonComponent],
   templateUrl: './main.component.html',
-  styleUrl: './main.component.css',
+  styleUrl: '../../../styles.css',
 })
 export class MainComponent {
   readonly ROUTES = ROUTES;

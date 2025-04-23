@@ -13,7 +13,7 @@ import { ButtonComponent } from '../../../../components/button.component';
   standalone: true,
   imports: [CommonModule, ButtonComponent],
   templateUrl: './user-details-page.component.html',
-  styleUrls: ['../../main.component.css', './user-details-page.css'],
+  styleUrls: ['../../main.component.css'],
 })
 export class UserDetailsPage implements OnInit {
   userId: number | null = null;

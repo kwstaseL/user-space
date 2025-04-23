@@ -1,4 +1,4 @@
-<div *ngIf="user && !isLoading" class="user-details--container">
+<div *ngIf="user && !isLoading" class="max-w-md m-auto">
   <header class="page--header">
     <span>User Details</span>
   </header>
@@ -64,10 +64,10 @@
   </footer>
 </div>
 
-<div *ngIf="isLoading" class="user-details--loading">
+<div *ngIf="isLoading" class="text-center py-8 text-gray-600">
   <span>Loading user information...</span>
 </div>
 
-<div *ngIf="error" class="user-details--loading">
+<div *ngIf="error" class="text-center py-8 text-gray-600">
   <span>{{ error }}</span>
 </div>
