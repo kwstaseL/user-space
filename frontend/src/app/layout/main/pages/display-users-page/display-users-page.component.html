@@ -13,8 +13,11 @@
       <span class="text-gray-500 text-lg mb-4">No users found.</span>
     </section>
 
-    <section *ngIf="!isLoading" class="overflow-x-auto">
-      <table *ngIf="users && users.length > 0" class="table--container">
+    <section
+      *ngIf="!isLoading && users && users.length > 0"
+      class="overflow-x-auto"
+    >
+      <table class="table--container">
         <thead>
           <tr>
             <th
@@ -23,8 +26,8 @@
               style="cursor: pointer"
             >
               Name
-              <span *ngIf="this.config.sortField === 'name'">
-                {{ this.config.sortDirection === "asc" ? "^" : "v" }}
+              <span *ngIf="sorting.sortField === 'name'">
+                {{ sorting.sortDirection === "asc" ? "^" : "v" }}
               </span>
             </th>
             <th
@@ -33,8 +36,8 @@
               style="cursor: pointer"
             >
               Surname
-              <span *ngIf="this.config.sortField === 'surname'">
-                {{ this.config.sortDirection === "asc" ? "^" : "v" }}
+              <span *ngIf="sorting.sortField === 'surname'">
+                {{ sorting.sortDirection === "asc" ? "^" : "v" }}
               </span>
             </th>
             <th class="table--header-cell">Actions</th>
@@ -59,7 +62,7 @@
               </button>
               <button
                 class="text-red-600 cursor-pointer"
-                (click)="deleteUser(user.id!)"
+                (click)="deleteUser(user.id)"
               >
                 Delete
               </button>
@@ -67,10 +70,31 @@
           </tr>
         </tbody>
       </table>
+      <section>
+        <div class="flex justify-center items-center m-5">
+          <app-button
+            variant="secondary"
+            label="Previous"
+            [disabled]="pagination.currentPage === 0"
+            (onClick)="previousPage()"
+          />
+
+          <span class="text-sm m-2">
+            Page {{ pagination.currentPage + 1 }} of {{ pagination.totalPages }}
+          </span>
+
+          <app-button
+            variant="secondary"
+            label="Next"
+            [disabled]="pagination.currentPage === pagination.totalPages - 1"
+            (onClick)="nextPage()"
+          />
+        </div>
+      </section>
     </section>
   </main>
 </div>
 
-<div *ngIf="errorMessage" class="text-center text-lg mt-4">
+<div *ngIf="errorMessage" class="not-found--message">
   <span>{{ errorMessage }}</span>
 </div>

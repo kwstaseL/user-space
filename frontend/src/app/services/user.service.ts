@@ -1,12 +1,14 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
+import { AuthService } from './auth.service';
+
 import { Observable } from 'rxjs';
 
-import { User } from '../entities/user';
-import { environment } from '../../env/env';
+import { User, UserDTO } from '../entities/user';
 import { PageResponse } from '../types/PageResponse';
-import { AuthService } from './auth.service';
+
+import { environment } from '../../env/env';
 
 @Injectable({
   providedIn: 'root',
@@ -31,13 +33,13 @@ export class UserService {
     });
   }
 
-  public createUser(user: User): Observable<User> {
+  public createUser(user: UserDTO): Observable<User> {
     return this.httpClient.post<User>(this.usersUrl, user, {
       headers: this.getAuthHeaders(),
     });
   }
 
-  public updateUser(userId: number, user: User): Observable<User> {
+  public updateUser(userId: number, user: UserDTO): Observable<User> {
     return this.httpClient.patch<User>(`${this.usersUrl}/${userId}`, user, {
       headers: this.getAuthHeaders(),
     });

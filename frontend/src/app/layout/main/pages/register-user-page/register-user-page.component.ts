@@ -9,7 +9,7 @@ import {
 } from '@angular/forms';
 
 import { UserService } from '../../../../services/user.service';
-import { User } from '../../../../entities/user';
+import { UserDTO } from '../../../../entities/user';
 import { AddressType } from '../../../../utils/enums';
 import { Address } from '../../../../entities/address';
 import { Router } from '@angular/router';
@@ -39,19 +39,36 @@ export class RegisterUserPage {
 
   constructor(private userService: UserService, private router: Router) {}
 
-  onSubmit() {
+  handleSubmit() {
     if (!this.userForm.valid) {
       return;
     }
-
     this.isSubmitting = true;
-    this.errorMessage = null;
 
     const user = this.createUserFromForm();
     this.saveUser(user);
   }
 
-  private createUserFromForm(): User {
+  private saveUser(user: UserDTO): void {
+    this.userService.createUser(user).subscribe({
+      next: () => this.handleSuccess(),
+      error: (error) => this.handleError(error),
+    });
+  }
+
+  private handleSuccess(): void {
+    this.isSubmitting = false;
+    this.router.navigate([ROUTES.USERS]);
+  }
+
+  private handleError(error: { status: number }): void {
+    this.isSubmitting = false;
+    console.error('Error while trying to create user ', error);
+    this.errorMessage = 'Could not register user.';
+  }
+
+  // Utils
+  private createUserFromForm(): UserDTO {
     const formData = this.userForm.value;
     const addresses = this.createAddressesFromForm(formData);
 
@@ -82,23 +99,5 @@ export class RegisterUserPage {
     }
 
     return addresses;
-  }
-
-  private saveUser(user: User): void {
-    this.userService.createUser(user).subscribe({
-      next: () => this.handleSuccess(),
-      error: (error) => this.handleError(error),
-    });
-  }
-
-  private handleSuccess(): void {
-    this.isSubmitting = false;
-    this.router.navigate([ROUTES.USERS]);
-  }
-
-  private handleError(error: { status: number }): void {
-    this.isSubmitting = false;
-    console.error('Error while trying to create user ', error);
-    this.errorMessage = 'Could not register user.';
   }
 }

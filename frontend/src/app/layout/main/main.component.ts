@@ -10,19 +10,18 @@ import { ButtonComponent } from '../../components/button.component';
 
 @Component({
   selector: 'app-main',
-  standalone: true,
   imports: [CommonModule, RouterOutlet, ButtonComponent],
   templateUrl: './main.component.html',
   styleUrl: '../../../styles.css',
 })
 export class MainComponent {
   readonly ROUTES = ROUTES;
-  currentRoute = '';
+  currentRoute: string = '';
 
   constructor(private router: Router) {
     this.router.events
       .pipe(filter((event) => event instanceof NavigationEnd))
-      .subscribe((event: any) => {
+      .subscribe((event: NavigationEnd) => {
         this.currentRoute = event.urlAfterRedirects;
       });
   }
@@ -31,7 +30,7 @@ export class MainComponent {
     this.router.navigate([path]);
   }
 
-  isActive(path: string): boolean {
+  isButtonActive(path: string): boolean {
     return this.currentRoute.startsWith(path);
   }
 }

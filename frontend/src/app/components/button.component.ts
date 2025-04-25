@@ -10,10 +10,11 @@ import { CommonModule } from '@angular/common';
 })
 export class ButtonComponent {
   @Input() label = 'Default';
-  @Input() variant: 'primary' = 'primary';
+  @Input() variant: 'primary' | 'secondary' = 'primary';
   @Input() size: 'small' | 'medium' | 'large' = 'small';
   @Input() active = false;
   @Input() disabled = false;
+  @Input() disableStyle: string = '';
   @Output() onClick = new EventEmitter<MouseEvent>();
 
   get buttonClasses(): string {
@@ -24,6 +25,10 @@ export class ButtonComponent {
 
     if (this.active) {
       classes.push('button--active');
+    }
+
+    if (this.disabled) {
+      classes.push('button--disabled');
     }
 
     return classes.join(' ');

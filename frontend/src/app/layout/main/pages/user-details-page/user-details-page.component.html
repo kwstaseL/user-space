@@ -58,7 +58,7 @@
     <app-button
       label="Back to Users"
       size="small"
-      variant="primary"
+      variant="secondary"
       (onClick)="goBack()"
     />
   </footer>
@@ -68,6 +68,6 @@
   <span>Loading user information...</span>
 </div>
 
-<div *ngIf="error" class="text-center py-8 text-gray-600">
+<div *ngIf="error" class="not-found--message">
   <span>{{ error }}</span>
 </div>

@@ -57,6 +57,10 @@
   @apply w-full p-2 rounded bg-blue-500 text-white disabled:bg-gray-300;
 }
 
+.form--error {
+  @apply text-red-600 text-sm mt-2;
+}
+
 /* Resuable styles for user details */
 
 /* Details styles */

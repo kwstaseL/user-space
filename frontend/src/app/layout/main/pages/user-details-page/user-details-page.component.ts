@@ -7,13 +7,14 @@ import { UserService } from '../../../../services/user.service';
 import { User } from '../../../../entities/user';
 import { ROUTES } from '../../../../utils/constants';
 import { ButtonComponent } from '../../../../components/button.component';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-user-details-page',
   standalone: true,
   imports: [CommonModule, ButtonComponent],
   templateUrl: './user-details-page.component.html',
-  styleUrls: ['../../main.component.css'],
+  styleUrls: ['../../main.component.css', '../../../../../styles.css'],
 })
 export class UserDetailsPage implements OnInit {
   userId: number | null = null;
@@ -31,30 +32,38 @@ export class UserDetailsPage implements OnInit {
     this.route.paramMap.subscribe((params) => {
       const id = params.get('id');
       if (id) {
-        this.userId = +id;
-        this.loadUserDetails();
+        const parsedId = +id;
+        if (isNaN(parsedId)) {
+          this.error = 'Invalid user ID';
+          this.isLoading = false;
+        } else {
+          this.userId = parsedId;
+          this.loadUserDetails();
+        }
       }
     });
   }
 
-  loadUserDetails(): void {
+  private loadUserDetails(): void {
     if (!this.userId) return;
 
     this.isLoading = true;
     this.userService.getUserById(this.userId).subscribe({
-      next: (data) => {
-        this.user = data;
+      next: (user: User) => {
+        this.user = user;
         this.isLoading = false;
       },
-      error: (err) => {
-        console.error('Error fetching user details:', err);
-        this.error = 'Could not find user with the given id.';
-        this.isLoading = false;
-      },
+      error: (err: HttpErrorResponse) => this.handleError(err),
     });
   }
 
   goBack(): void {
     this.router.navigate([ROUTES.USERS]);
+  }
+
+  private handleError(err: HttpErrorResponse) {
+    console.error('Error fetching user details:', err);
+    this.error = 'Could not find user with the given id.';
+    this.isLoading = false;
   }
 }

@@ -4,24 +4,47 @@ import { Router } from '@angular/router';
 
 import { User } from '../../../../entities/user';
 import { UserService } from '../../../../services/user.service';
+import { PageResponse } from '../../../../types/PageResponse';
+import { ButtonComponent } from '../../../../components/button.component';
+
+interface SortingInterface {
+  sortField: string;
+  sortDirection: 'asc' | 'desc';
+}
+
+interface PaginationInterface {
+  currentPage: number;
+  totalPages: number;
+  pageSize: number;
+}
+
+interface UserListConfig {
+  pagination: PaginationInterface;
+  sorting: SortingInterface;
+}
 
 @Component({
   selector: 'app-display-users-page',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, ButtonComponent],
   templateUrl: './display-users-page.component.html',
-  styleUrls: ['../../main.component.css'],
+  styleUrls: ['../../main.component.css', '../../../../../styles.css'],
 })
 export class DisplayUsersPage implements OnInit {
   users: User[] = [];
   errorMessage: string | null = null;
   isLoading = true;
 
-  readonly config = {
-    page: 0,
-    pageSize: 20,
-    sortField: 'name',
-    sortDirection: 'asc',
+  readonly userListConfig: UserListConfig = {
+    pagination: {
+      currentPage: 0,
+      totalPages: 0,
+      pageSize: 5,
+    },
+    sorting: {
+      sortField: 'name',
+      sortDirection: 'asc',
+    },
   };
 
   constructor(private userService: UserService, public router: Router) {}
@@ -30,17 +53,18 @@ export class DisplayUsersPage implements OnInit {
     this.loadUsers();
   }
 
-  loadUsers(): void {
-    // this.isLoading = true;
+  private loadUsers(): void {
+    this.isLoading = true;
+    const { currentPage, pageSize } = this.pagination;
+    const { sortField, sortDirection } = this.sorting;
+
     this.userService
-      .getAllUsers(
-        this.config.page,
-        this.config.pageSize,
-        `${this.config.sortField},${this.config.sortDirection}`
-      )
+      .getAllUsers(currentPage, pageSize, `${sortField},${sortDirection}`)
       .subscribe({
-        next: (data) => {
-          this.users = data.content;
+        next: (userPage: PageResponse<User>) => {
+          this.users = userPage.content;
+          this.pagination.totalPages = userPage.totalPages;
+          this.pagination.currentPage = userPage.number;
           this.isLoading = false;
         },
         error: (err) => {
@@ -56,6 +80,8 @@ export class DisplayUsersPage implements OnInit {
       this.userService.deleteUser(id).subscribe({
         next: () => {
           this.users = this.users.filter((user) => user.id !== id);
+          this.pagination.currentPage = 0;
+          this.loadUsers();
         },
         error: (err) => {
           console.error('Error deleting user:', err);
@@ -65,14 +91,40 @@ export class DisplayUsersPage implements OnInit {
   }
 
   toggleSort(field: string): void {
-    if (this.config.sortField === field) {
-      this.config.sortDirection =
-        this.config.sortDirection === 'asc' ? 'desc' : 'asc';
+    if (this.sorting.sortField === field) {
+      this.sorting.sortDirection =
+        this.sorting.sortDirection === 'asc' ? 'desc' : 'asc';
     } else {
-      this.config.sortField = field;
-      this.config.sortDirection = 'asc';
+      this.sorting.sortField = field;
+      this.sorting.sortDirection = 'asc';
     }
 
     this.loadUsers();
+  }
+
+  goToPage(page: number): void {
+    this.pagination.currentPage = page;
+    this.loadUsers();
+  }
+
+  previousPage(): void {
+    if (this.pagination.currentPage > 0) {
+      this.goToPage(this.pagination.currentPage - 1);
+    }
+  }
+
+  nextPage(): void {
+    if (this.pagination.currentPage < this.pagination.totalPages - 1) {
+      this.goToPage(this.pagination.currentPage + 1);
+    }
+  }
+
+  // Utils
+  get pagination() {
+    return this.userListConfig.pagination;
+  }
+
+  get sorting() {
+    return this.userListConfig.sorting;
   }
 }

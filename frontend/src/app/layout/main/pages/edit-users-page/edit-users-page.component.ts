@@ -1,26 +1,30 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
+
 import {
   FormControl,
   FormGroup,
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
+import { HttpErrorResponse } from '@angular/common/http';
+
+import { ROUTES } from '../../../../utils/constants';
+import { AddressType } from '../../../../utils/enums';
+
+import { User, UserDTO } from '../../../../entities/user';
+import { Address } from '../../../../entities/address';
+
 import { UserFormComponent } from '../../components/user-form/user-form.component';
 import { UserService } from '../../../../services/user.service';
-import { ActivatedRoute, Router } from '@angular/router';
-import { AddressType } from '../../../../utils/enums';
-import { ROUTES } from '../../../../utils/constants';
-import { User } from '../../../../entities/user';
-import { Address } from '../../../../entities/address';
-import { HttpErrorResponse } from '@angular/common/http';
 import { UserFormData } from '../../../../types/FormData';
 
 @Component({
   selector: 'app-edit-users-page',
   imports: [CommonModule, ReactiveFormsModule, UserFormComponent],
   templateUrl: './edit-users-page.component.html',
-  styleUrls: ['../../main.component.css'],
+  styleUrls: ['../../main.component.css', '../../../../../styles.css'],
 })
 export class EditUsersPage {
   userForm: FormGroup = new FormGroup({
@@ -52,9 +56,10 @@ export class EditUsersPage {
     });
   }
 
-  loadUserData(): void {
+  private loadUserData(): void {
     if (!this.userId) return;
 
+    this.isLoading = true;
     this.userService.getUserById(this.userId).subscribe({
       next: (user) => {
         this.loadBasicUserInfo(user);
@@ -73,16 +78,13 @@ export class EditUsersPage {
     if (!this.userForm.valid || !this.userId) {
       return;
     }
-    const updatedUser = this.createUserFromForm();
+
+    const updatedUser: UserDTO = this.createUserFromForm();
     this.userService.updateUser(this.userId, updatedUser).subscribe({
       next: () => {
         this.router.navigate([ROUTES.USERS]);
       },
-      error: (err: HttpErrorResponse) => {
-        console.error('Error updating user:', err);
-        this.errorMessage = 'Failed to update user';
-        this.isLoading = false;
-      },
+      error: (err: HttpErrorResponse) => this.handleError(err),
     });
   }
 
@@ -90,8 +92,13 @@ export class EditUsersPage {
     this.router.navigate([ROUTES.USERS]);
   }
 
-  // Utilities
+  private handleError(err: HttpErrorResponse) {
+    console.error('Error updating user:', err);
+    this.errorMessage = 'Failed to update user';
+    this.isLoading = false;
+  }
 
+  // Utilities
   private loadBasicUserInfo(user: User): void {
     this.userForm.patchValue({
       name: user.name,
@@ -105,10 +112,10 @@ export class EditUsersPage {
     if (!addresses || addresses.length === 0) return;
 
     const workAddress = addresses.find(
-      (addr) => addr.addressType === AddressType.WORK
+      (addr: Address) => addr.addressType === AddressType.WORK
     );
     const homeAddress = addresses.find(
-      (addr) => addr.addressType === AddressType.HOME
+      (addr: Address) => addr.addressType === AddressType.HOME
     );
 
     this.userForm.patchValue({
@@ -117,11 +124,13 @@ export class EditUsersPage {
     });
   }
 
-  private createUserFromForm(): User {
+  private createUserFromForm(): UserDTO {
     const formData = this.userForm.value;
     const addresses = this.createAddressesFromForm(formData);
 
     return {
+      // userId will always be there
+      // we have a condition in init to handle this case
       id: this.userId!,
       name: formData.name,
       surname: formData.surname,

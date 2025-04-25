@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 
 import { MainComponent } from './layout/main/main.component';
 import { HeaderComponent } from './layout/header/header.component';
@@ -9,6 +9,4 @@ import { HeaderComponent } from './layout/header/header.component';
   imports: [HeaderComponent, MainComponent],
   templateUrl: './app.component.html',
 })
-export class AppComponent {
-  constructor() {}
-}
+export class AppComponent {}
