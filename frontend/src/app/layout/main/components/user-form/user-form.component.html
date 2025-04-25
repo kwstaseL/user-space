@@ -1,0 +1,104 @@
+<form [formGroup]="userForm" (ngSubmit)="onSubmit()">
+  <section class="form--group">
+    <label for="name" class="form--label">Name*</label>
+    <input id="name" type="text" formControlName="name" class="form--input" />
+    <div
+      *ngIf="userForm.get('name')!.invalid && userForm.get('name')!.touched"
+      class="form--error"
+    >
+      Name is required
+    </div>
+  </section>
+
+  <section class="form--group">
+    <label for="surname" class="form--label">Surname*</label>
+    <input
+      id="surname"
+      type="text"
+      formControlName="surname"
+      class="form--input"
+    />
+    <div
+      *ngIf="
+        userForm.get('surname')!.invalid && userForm.get('surname')!.touched
+      "
+      class="form--error"
+    >
+      Surname is required
+    </div>
+  </section>
+
+  <section class="form--group">
+    <label for="gender" class="form--label">Gender*</label>
+    <select id="gender" formControlName="gender" class="form--input">
+      <option value="MALE">Male</option>
+      <option value="FEMALE">Female</option>
+    </select>
+    <div
+      *ngIf="userForm.get('gender')!.invalid && userForm.get('gender')!.touched"
+      class="form--error"
+    >
+      Gender is required
+    </div>
+  </section>
+
+  <section class="form--group">
+    <label for="birthdate" class="form--label">Birthdate*</label>
+    <input
+      id="birthdate"
+      type="date"
+      formControlName="birthdate"
+      class="form--input"
+    />
+    <div
+      *ngIf="
+        userForm.get('birthdate')!.invalid && userForm.get('birthdate')!.touched
+      "
+      class="form--error"
+    >
+      Birthdate is required
+    </div>
+  </section>
+
+  <section class="form--group">
+    <label for="workAddress" class="form--label">Work Address</label>
+    <textarea
+      id="workAddress"
+      formControlName="workAddress"
+      rows="2"
+      class="form--input"
+    ></textarea>
+  </section>
+
+  <section class="form--group">
+    <label for="homeAddress" class="form--label">Home Address</label>
+    <textarea
+      id="homeAddress"
+      formControlName="homeAddress"
+      rows="2"
+      class="form--input"
+    ></textarea>
+  </section>
+
+  <section class="pt-3 flex gap-2">
+    <button
+      type="submit"
+      [disabled]="userForm.invalid || isSubmitting"
+      class="form--submit-button"
+    >
+      <span *ngIf="!isSubmitting">{{ submitButtonText }}</span>
+      <span *ngIf="isSubmitting">Processing...</span>
+    </button>
+
+    <app-button
+      *ngIf="showCancelButton"
+      label="Cancel"
+      (onClick)="onCancel()"
+      size="medium"
+    />
+  </section>
+
+  <section class="mt-2" *ngIf="errorMessage">
+    <p class="form--error">{{ errorMessage }}</p>
+  </section>
+</form>

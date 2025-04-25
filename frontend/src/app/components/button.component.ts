@@ -13,6 +13,7 @@ export class ButtonComponent {
   @Input() variant: 'primary' = 'primary';
   @Input() size: 'small' | 'medium' | 'large' = 'small';
   @Input() active = false;
+  @Input() disabled = false;
   @Output() onClick = new EventEmitter<MouseEvent>();
 
   get buttonClasses(): string {

@@ -1,0 +1,17 @@
+<div class="max-w-md m-auto">
+  <header class="page--header">Edit User</header>
+
+  <div *ngIf="isLoading" class="text-center py-4">
+    <span>Loading user data...</span>
+  </div>
+
+  <app-user-form
+    *ngIf="!isLoading"
+    [userForm]="userForm"
+    [errorMessage]="errorMessage"
+    submitButtonText="Save Changes"
+    [showCancelButton]="true"
+    (formSubmit)="handleSubmit()"
+    (cancelClick)="handleCancel()"
+  />
+</div>

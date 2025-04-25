@@ -14,10 +14,12 @@ import { AddressType } from '../../../../utils/enums';
 import { Address } from '../../../../entities/address';
 import { Router } from '@angular/router';
 import { ROUTES } from '../../../../utils/constants';
+import { UserFormComponent } from '../../components/user-form/user-form.component';
+import { UserFormData } from '../../../../types/FormData';
 
 @Component({
   selector: 'app-register-user-page',
-  imports: [ReactiveFormsModule, CommonModule],
+  imports: [ReactiveFormsModule, CommonModule, UserFormComponent],
   standalone: true,
   templateUrl: './register-user-page.component.html',
   styleUrls: ['../../main.component.css'],
@@ -62,7 +64,7 @@ export class RegisterUserPage {
     };
   }
 
-  private createAddressesFromForm(formData: any): Address[] {
+  private createAddressesFromForm(formData: UserFormData): Address[] {
     const addresses: Address[] = [];
 
     if (formData.workAddress) {

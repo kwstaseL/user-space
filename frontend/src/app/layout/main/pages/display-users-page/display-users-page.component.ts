@@ -4,7 +4,6 @@ import { Router } from '@angular/router';
 
 import { User } from '../../../../entities/user';
 import { UserService } from '../../../../services/user.service';
-import { Subject } from 'rxjs';
 
 @Component({
   selector: 'app-display-users-page',

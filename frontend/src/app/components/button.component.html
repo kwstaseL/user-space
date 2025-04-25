@@ -1,3 +1,7 @@
-<button [class]="buttonClasses" (click)="onClick.emit($event)">
+<button
+  [class]="buttonClasses"
+  [disabled]="disabled"
+  (click)="onClick.emit($event)"
+>
   {{ label }}
 </button>

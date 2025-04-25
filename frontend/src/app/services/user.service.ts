@@ -37,6 +37,12 @@ export class UserService {
     });
   }
 
+  public updateUser(userId: number, user: User): Observable<User> {
+    return this.httpClient.patch<User>(`${this.usersUrl}/${userId}`, user, {
+      headers: this.getAuthHeaders(),
+    });
+  }
+
   public getAllUsers(
     page: number = 0,
     pageSize: number = 20,
