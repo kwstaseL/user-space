@@ -40,19 +40,28 @@ public class UserService {
     }
 
     @Transactional
-    public User updateUser(User user) {
-        boolean exists = userRepository.existsById(user.getId());
-        if (!exists) {
-            logger.warn("Update failed, user with ID: {} not found", user.getId());
-            throw new UserNotFoundException("User not found with id: " + user.getId());
+    public User updateUser(User updatedUser) {
+        Optional<User> existingUserOptional = userRepository.findById(updatedUser.getId());
+        if (existingUserOptional.isEmpty()) {
+            logger.warn("Update failed, user with ID: {} not found", updatedUser.getId());
+            throw new UserNotFoundException("User not found with id: " + updatedUser.getId());
         }
+        logger.info("Updating user with id {}", updatedUser.getId());
+        User existingUser = existingUserOptional.get();
+        existingUser.setName(updatedUser.getName());
+        existingUser.setSurname(updatedUser.getSurname());
+        existingUser.setGender(updatedUser.getGender());
+        existingUser.setBirthDate(updatedUser.getBirthDate());
 
-        if (user.getAddresses() != null) {
-            for (Address address : user.getAddresses()) {
-                address.setUser(user);
+        existingUser.getAddresses().clear();
+        if (updatedUser.getAddresses() != null) {
+            for (Address address : updatedUser.getAddresses()) {
+                address.setUser(existingUser); // link address with user
+                existingUser.getAddresses().add(address);
             }
         }
-        return userRepository.save(user);
+
+        return userRepository.save(existingUser);
     }
 
     @Transactional

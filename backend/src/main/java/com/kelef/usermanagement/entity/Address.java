@@ -1,14 +1,16 @@
 package com.kelef.usermanagement.entity;
+
 import com.kelef.usermanagement.utils.enums.AddressType;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.validation.constraints.NotNull;
 
 import jakarta.persistence.*;
 
 import lombok.AllArgsConstructor;
-import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.Data;
 
 @Entity
 @Table(name = "addresses")

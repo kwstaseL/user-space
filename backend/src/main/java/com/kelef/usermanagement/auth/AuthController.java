@@ -24,7 +24,6 @@ public class AuthController {
         this.authService = authService;
     }
 
-
     /**
      * Generates and returns a JWT token to the client.
      *
