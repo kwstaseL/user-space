@@ -46,6 +46,12 @@ public class UserService {
             logger.warn("Update failed, user with ID: {} not found", user.getId());
             throw new UserNotFoundException("User not found with id: " + user.getId());
         }
+
+        if (user.getAddresses() != null) {
+            for (Address address : user.getAddresses()) {
+                address.setUser(user);
+            }
+        }
         return userRepository.save(user);
     }
 

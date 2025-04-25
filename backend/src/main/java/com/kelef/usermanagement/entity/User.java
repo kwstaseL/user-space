@@ -62,4 +62,18 @@ public class User {
     public int getAge() {
         return birthDate != null ? Period.between(birthDate, LocalDate.now()).getYears() : 0;
     }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", surname='" + surname + '\'' +
+                ", gender=" + gender +
+                ", birthDate=" + birthDate +
+                ", addresses=" + addresses +
+                ", createdAt=" + createdAt +
+                ", updatedAt=" + updatedAt +
+                '}';
+    }
 }

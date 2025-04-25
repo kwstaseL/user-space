@@ -37,16 +37,18 @@ public class UserController {
      * Updates an existing user
      * @param id The ID of the user to update
      * @param user The updated user information
-     * @return The updated user with 200 status or 400 if IDs don't match
+     * @return The updated user with 200 status or 400 if the provided ID doesn't match the provided user.
      */
-    @PutMapping("/{id}")
+    @PatchMapping("/{id}")
     public ResponseEntity<User> updateUser(@PathVariable("id") Long id, @Valid @RequestBody User user) {
-        if (!id.equals(user.getId())) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        if (id != user.getId()) {
+            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
         }
+
         User updatedUser = userService.updateUser(user);
         return new ResponseEntity<>(updatedUser, HttpStatus.OK);
     }
+
 
     /**
      * Deletes a user by ID
